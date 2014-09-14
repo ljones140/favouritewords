@@ -1,6 +1,10 @@
 <?php
 
-require('connections.php'); 
+	$page = $_SERVER['PHP_SELF'];
+        $sec = "2";
+        header("Refresh: $sec; url=$page");
+
+	require('connections.php'); 
 
 
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -31,14 +35,25 @@ require('connections.php');
   	<title>Favourite Words</title>
 
 	<style type="text/css">
-	p {
+	.word {
+		font-size: 50pt;
 		color: green;
 		<?php echo $font; ?>
-		margin-right: auto;
-		margin-left: auto;
-		margin-top: auto;
-		margin-bottom: auto;
-		width: 6em;
+		margin: auto;
+		position: absolute;
+  		top: 35%; 
+  		left: 50%; 
+  		bottom: 65%; 
+  		right: 50%;
+
+
+
+	/*	margin: 50%; */
+	/*	margin-right: auto; */
+	/*	margin-left: auto; */
+	/*	margin-top: auto; */
+	/*	margin-bottom: auto; */
+	/*	width: 6em; */
 
 	}
 	</style>
@@ -47,7 +62,18 @@ require('connections.php');
 </head>
 
 <body>
+
+	<div class="word">
 <?php
+	
+	//get the count of words to do random calc
+
+	
+//	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+//	$query = "SELECT count(*) FROM word";
+
+//	$result = mysqli_query($dbc, $query);
+//	while ($row = mysqli_query($dbc, $query)
 
 	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	$query ="SELECT word FROM word ".
@@ -68,6 +94,7 @@ require('connections.php');
 //	echo $font;
 
 ?>
+	</div>
 
 
 </body>
