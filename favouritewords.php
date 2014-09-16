@@ -1,8 +1,8 @@
 <?php
 
-	$page = $_SERVER['PHP_SELF'];
-        $sec = "2";
-        header("Refresh: $sec; url=$page");
+//	$page = $_SERVER['PHP_SELF'];
+  //      $sec = "2";
+//        header("Refresh: $sec; url=$page");
 
 	require('connections.php'); 
 	
@@ -101,7 +101,7 @@
 	mysqli_close($dbc);
 	
 	echo '<p>' . $word . '</p>';
-
+//	echo $query;
 //	echo $font;
 
 ?>
