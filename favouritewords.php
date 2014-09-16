@@ -1,8 +1,8 @@
 <?php
 
-//	$page = $_SERVER['PHP_SELF'];
-  //      $sec = "2";
-//        header("Refresh: $sec; url=$page");
+	$page = $_SERVER['PHP_SELF'];
+        $sec = "2";
+        header("Refresh: $sec; url=$page");
 
 	require('connections.php'); 
 	
@@ -21,7 +21,7 @@
 	
 
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-        $query ="SELECT font FROM font WHERE fontid = $randfont ";
+        $query ="SELECT font FROM font limit $randfont, 1 ";
 
         $result = mysqli_query($dbc, $query);
         while ($row = mysqli_fetch_assoc($result)) {
@@ -90,8 +90,7 @@
 	$randword = mt_rand(1,$wordcount);
 
 	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-	$query ="SELECT word FROM word ".
-		"WHERE wordid = $randword"; 
+	$query ="SELECT word FROM word LIMIT $randword,1 ";
 
 	$result = mysqli_query($dbc, $query);
   	while ($row = mysqli_fetch_assoc($result)) {
