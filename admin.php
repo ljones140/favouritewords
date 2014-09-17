@@ -23,21 +23,23 @@ require('connections.php');
 	if(isset($_POST['newword'])){
 		$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		$newword = mysqli_real_escape_string($dbc, $_POST['newword']);
-		$query = "SELECT * FROM word where word = '$newword'";
-		$result  = mysqli_query($dbc, $query);
-		if(mysqli_num_rows($result) > 0) {
-			echo '<h2>Word Already Exists</p>';
+		if (!empty($newword)){
+			$query = "SELECT * FROM word where word = '$newword'";
+			$result  = mysqli_query($dbc, $query);
+			if(mysqli_num_rows($result) > 0) {
+				echo '<h2>Word Already Exists</p>';
+			}
+			else {
+				$query = "INSERT INTO word (word) values ('$newword')";
+				mysqli_query($dbc, $query) or die ('Error Querying Database');
+			
+				echo '<p>New Word Added: ' . $newword . '</p>';
+			}
+			mysqli_close($dbc);
 		}
 		else {
-			$query = "INSERT INTO word (word) values ('$newword')";
-			mysqli_query($dbc, $query) or die ('Error Querying Database');
-			
-			echo '<p>New Word Added: ' . $newword . '</p>';
-
-				
+			echo '<p>Your word is Empty Dummy!!!</p>';
 		}
-		mysqli_close($dbc);
-
 	}		
 
 
