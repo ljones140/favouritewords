@@ -1,10 +1,13 @@
 <?php
 
 	$page = $_SERVER['PHP_SELF'];
-        $sec = "2";
+        $sec = "1";
         header("Refresh: $sec; url=$page");
 
 	require('connections.php'); 
+
+	//works out random font
+	//get the count
 	
 	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         $query = "SELECT count(*) as fontcount FROM font";
@@ -16,9 +19,11 @@
         
         mysqli_close($dbc);
 
-        $randfont = mt_rand(1,$fontcount);
+	//calculates random row	
 
+        $randfont = mt_rand(1,$fontcount);
 	
+	//gets the font
 
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         $query ="SELECT font FROM font limit $randfont, 1 ";
@@ -31,6 +36,36 @@
         mysqli_close($dbc);
 
 
+	//random colour
+
+	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+        $query = "SELECT count(*) as colourcount FROM colour";
+        $result = mysqli_query($dbc, $query);
+        while ($row = mysqli_fetch_assoc($result)){
+                $colourcount = $row['colourcount'];
+
+        }
+
+        mysqli_close($dbc);
+
+	//calculates random colour row
+
+        $randcolour = mt_rand(1, $colourcount);
+
+	//gets the colour
+
+	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+        $query ="SELECT colour FROM colour limit $randcolour, 1 ";
+
+        $result = mysqli_query($dbc, $query);
+        while ($row = mysqli_fetch_assoc($result)) {
+                $fontcolour = $row['colour'];
+        }
+
+        mysqli_close($dbc);
+
+
+	$randsize = mt_rand(60,200);
 ?>
 
 
@@ -44,8 +79,10 @@
 
 	<style type="text/css">
 	.word {
-		font-size: 100pt;
-		color: green;
+		font-size: 100pt; 
+	/*	font-size: <?php echo $randsize?>pt; */ 
+		color: <?php echo $fontcolour ?>;  
+	/*	color: green; */
 		<?php echo $font; ?>
 		margin: auto;
 		position: absolute; 
