@@ -2,6 +2,17 @@
 
 require('connections.php');
 
+session_start();
+
+  // If the session vars aren't set, try to set them with a cookie
+ 	if (!isset($_SESSION['user_id'])) {
+    		if (isset($_COOKIE['user_id']) && isset($_COOKIE['username'])) {
+      			$_SESSION['user_id'] = $_COOKIE['user_id'];
+      			$_SESSION['username'] = $_COOKIE['username'];
+    		}
+ 	 }
+
+
 ?>
 
 
@@ -19,6 +30,15 @@ require('connections.php');
 	<h1>Favourite Word Admin Page</h1>
 
 <?php
+
+	if (!isset($_SESSION['user_id'])) {
+    		echo '<p>Please <a href="login.php">log in</a> to access this page.</p>';
+    		exit();
+  	}
+	else {
+    		echo('<p>You are logged in as ' . $_SESSION['username'] . '</p>');
+  	}
+
 	
 	if(isset($_POST['newword'])){
 		$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
